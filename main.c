@@ -5,6 +5,7 @@
 void parse_arguments(int argc, char *argv[]);
 char *read_entire_file(const char *filepath, int *size);
 void handle_default_case(const char *filepath);
+int is_char_ok(char c);
 
 int main(int argc, char *argv[])
 {
@@ -13,6 +14,7 @@ int main(int argc, char *argv[])
 }
 
 #define LINE_ARGUMENT "-l"
+
 void parse_arguments(int argc, char *argv[])
 {
     printf("Number of arguments : %i\n", argc);
@@ -24,8 +26,8 @@ void parse_arguments(int argc, char *argv[])
         if (Equal == 0 && isdigit(*argv[2]))
         {
             // TODO : make another function to handle this case
-            int arg = *argv[2] - '0';
-            printf("%i\n", arg);
+            int Arg = *argv[2] - '0';
+            printf("%i\n", Arg);
         }
         else
         {
@@ -52,19 +54,38 @@ void handle_default_case(const char *filepath)
 
     printf("FFS...\n");
 
-    int LineByteCount = 0;
+    int GeneralByteCount = 0;
 
-    for (int i = 0; i < Size; ++i)
+    while (GeneralByteCount < Size)
     {
-        printf(" %0x ", *FileContent, *FileContent);
-        LineByteCount++;
-        if (LineByteCount == 16)
+        int BytesPerLine = Size - GeneralByteCount;
+        if (BytesPerLine > 16)
+            BytesPerLine = 16;
+
+        // Print hex values
+        for (int i = 0; i < BytesPerLine; ++i)
         {
-            printf("\n");
-            LineByteCount = 0;
+            char CharToPrint = FileContent[GeneralByteCount];
+            if (CharToPrint > 0xF)
+                printf(" %x ", CharToPrint);
+            else
+                printf(" 0%x ", CharToPrint);
+
+            GeneralByteCount++;
         }
 
-        FileContent++;
+        // Print ASCII values
+        printf("|");
+        for (int i = 0; i < BytesPerLine; ++i)
+        {
+            char CharToPrint = FileContent[GeneralByteCount - (BytesPerLine - i)];
+            if (is_char_ok(CharToPrint))
+                printf(" %c ", CharToPrint);
+            else
+                printf(" . ");
+        }
+        printf("|");
+        printf("\n");
     }
 }
 
@@ -86,4 +107,11 @@ char *read_entire_file(const char *filepath, int *size)
         return NULL;
     *size = Size;
     return Buffer;
+}
+
+int is_char_ok(char c)
+{
+    if (c <= 0x254 && c >= 0x41)
+        return 1;
+    return 0;
 }
