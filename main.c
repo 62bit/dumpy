@@ -150,6 +150,6 @@ int is_char_ok(unsigned char c)
 int main(int argc, char *argv[])
 {
     handle_arguments(argc, argv);
-    /// OMG u didn't free allocated memory and close file stream!!! Guess what? I have an OS.
+    /// OMG u didn't free allocated memory and don't close file stream either!!! Guess what? I have an OS.
     return 0;
 }

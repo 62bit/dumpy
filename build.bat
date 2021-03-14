@@ -4,5 +4,5 @@ if not exist output\ (
    mkdir output\
 )
 pushd output\
-	  cl /nologo /Zi ..\*.c
+	  cl /nologo /Fe"dumpy.exe" /O2 ..\*.c
 popd
