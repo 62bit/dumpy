@@ -22,7 +22,6 @@ dumpy 8 ./pass.txt
 
 `$ dumpy lol.txt` <br/>
 ```
-
 00000  25  24  21  7E  5E  60  23  54  45  53  54  0D  0A  64  73  61 |%$!~^`#TEST..dsa|
 00010  52  52  52  0D  0A  4C  6F  72  65  6D  20  49  70  73  75  6D |RRR..Lorem.Ipsum|
 00020  20  69  73  20  73  69  6D  70  6C  79  20  64  75  6D  6D  79 |.is.simply.dummy|
@@ -41,12 +40,10 @@ dumpy 8 ./pass.txt
 000f0  64  20  69  74  20  74  6F  20  6D  61  6B  65  20  61  20  74 |d.it.to.make.a.t|
 00100  79  70  65  20  73  70  65  63  69  6D  65  6E  20  62  6F  6F |ype.specimen.boo|
 00110  6B  2E  0D  0A |k...|
-
 ```
 
 `$ dumpy 8 lol.txt` <br/>
 ```
-
 00000  25  24  21  7E  5E  60  23  54 |%$!~^`#T|
 00008  45  53  54  0D  0A  64  73  61 |EST..dsa|
 00010  52  52  52  0D  0A  4C  6F  72 |RRR..Lor|
@@ -82,5 +79,4 @@ dumpy 8 ./pass.txt
 00100  79  70  65  20  73  70  65  63 |ype.spec|
 00108  69  6D  65  6E  20  62  6F  6F |imen.boo|
 00110  6B  2E  0D  0A |k...|
-
 ```
