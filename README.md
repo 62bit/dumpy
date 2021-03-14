@@ -11,13 +11,11 @@ Build: <br/>
 
 `$ dumpy` <br/>
 ```
-
 $ dumpy [bytes per line ([1-99] default 16)] [file path]
 
 Example:
 dumpy a.png
 dumpy 8 ./pass.txt
-
 ```
 
 `$ dumpy lol.txt` <br/>
