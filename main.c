@@ -2,54 +2,11 @@
 #include <stdlib.h>
 #include <string.h>
 
-void handle_arguments(int argc, char *argv[]);
 void handle_lenght_specified_case(const char *filePath, unsigned int lineLenght);
 void handle_default_case(const char *filepath);
 void print_line(char *begin, unsigned int size, unsigned int startingByteNumber);
 char *read_entire_file(const char *filepath, int *size);
 int is_char_ok(unsigned char c);
-
-void handle_arguments(int argc, char *argv[])
-{
-    if (argc == 3)
-    {
-        if (isdigit(*argv[1]))
-        {
-            int IntFirst = *argv[1] - '0';
-            int IntSecond = *(argv[1] + 1) - '0';
-
-            unsigned int Arg = 0;
-            if (isdigit(*((argv[1]) + 1)))
-                Arg = IntFirst * 10 + IntSecond;
-            else
-                Arg = IntFirst;
-
-            if (Arg != 0)
-            {
-                printf("\n");
-                handle_lenght_specified_case(argv[2], Arg);
-            }
-            else
-            {
-                printf("Wrong argument (0 is not allowed)...");
-            }
-        }
-        else
-        {
-            printf("\nWrong argument...\n\n$ dumpy [bytes per line] [file path]\n\nExample:\ndumpy a.png\ndumpy 8 ./pass.txt\n");
-        }
-    }
-    else if (argc == 2)
-    {
-        printf("\n");
-        handle_default_case(argv[1]);
-    }
-    else
-    {
-        printf("\n$ dumpy [bytes per line ([1-99] default 16)] [file path]\n\nExample:\ndumpy a.png\ndumpy 8 ./pass.txt\n");
-        exit(1);
-    }
-}
 
 void handle_lenght_specified_case(const char *filePath, unsigned int lineLenght)
 {
@@ -149,7 +106,44 @@ int is_char_ok(unsigned char c)
 
 int main(int argc, char *argv[])
 {
-    handle_arguments(argc, argv);
+    if (argc == 3)
+    {
+        if (isdigit(*argv[1]))
+        {
+            int IntFirst = *argv[1] - '0';
+            int IntSecond = *(argv[1] + 1) - '0';
+
+            unsigned int Arg = 0;
+            if (isdigit(*((argv[1]) + 1)))
+                Arg = IntFirst * 10 + IntSecond;
+            else
+                Arg = IntFirst;
+
+            if (Arg != 0)
+            {
+                printf("\n");
+                handle_lenght_specified_case(argv[2], Arg);
+            }
+            else
+            {
+                printf("Wrong argument (0 is not allowed)...");
+            }
+        }
+        else
+        {
+            printf("\nWrong argument...\n\n$ dumpy [bytes per line] [file path]\n\nExample:\ndumpy a.png\ndumpy 8 ./pass.txt\n");
+        }
+    }
+    else if (argc == 2)
+    {
+        printf("\n");
+        handle_default_case(argv[1]);
+    }
+    else
+    {
+        printf("\n$ dumpy [bytes per line ([1-99] default 16)] [file path]\n\nExample:\ndumpy a.png\ndumpy 8 ./pass.txt\n");
+        exit(1);
+    }
     /// OMG u didn't free allocated memory and don't close file stream either!!! Guess what? I have an OS.
     return 0;
 }
