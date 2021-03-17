@@ -3,7 +3,7 @@ pepegalized implementation of hexdump
 
 # Quick Start
 ### Linux
-`gcc -O2 -o dumpy main.c` 
+`$ gcc -O2 -o dumpy main.c` 
 ### Windows
 Initialize environment variables: <br/>
 `$ vcvarsall.bat x64` <br/>
