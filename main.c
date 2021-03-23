@@ -8,6 +8,8 @@ void print_line(char *begin, unsigned int size, unsigned int startingByteNumber)
 char *read_entire_file(const char *filepath, int *size);
 int is_char_ok(unsigned char c);
 
+#define DEFAULT_SIZE 500
+
 void handle_lenght_specified_case(const char *filePath, unsigned int lineLenght)
 {
     int Size = 0;
@@ -25,6 +27,8 @@ void handle_lenght_specified_case(const char *filePath, unsigned int lineLenght)
         FileContent += BytesPerLine;
         GeneralByteCount += BytesPerLine;
     }
+
+    exit(EXIT_SUCCESS);
 }
 
 void handle_default_case(const char *filePath)
@@ -44,6 +48,26 @@ void handle_default_case(const char *filePath)
         FileContent += BytesPerLine;
         GeneralByteCount += BytesPerLine;
     }
+
+    exit(EXIT_SUCCESS);
+}
+
+void handle_stdin_case(char *FileContent, size_t size)
+{
+    int GeneralByteCount = 0;
+
+    while (GeneralByteCount < size)
+    {
+        int BytesPerLine = size - GeneralByteCount;
+        if (BytesPerLine > 16)
+            BytesPerLine = 16;
+
+        print_line(FileContent, BytesPerLine, GeneralByteCount);
+        FileContent += BytesPerLine;
+        GeneralByteCount += BytesPerLine;
+    }
+
+    exit(EXIT_SUCCESS);
 }
 
 void print_line(char *begin, unsigned int size, unsigned int startingByteNumber)
@@ -132,6 +156,7 @@ int main(int argc, char *argv[])
         else
         {
             printf("\nWrong argument...\n\n$ dumpy [bytes per line] [file path]\n\nExample:\ndumpy a.png\ndumpy 8 ./pass.txt\n");
+            exit(1);
         }
     }
     else if (argc == 2)
@@ -139,11 +164,32 @@ int main(int argc, char *argv[])
         printf("\n");
         handle_default_case(argv[1]);
     }
-    else
+    else if (argc > 3)
     {
-        printf("\n$ dumpy [bytes per line ([1-99] default 16)] [file path]\n\nExample:\ndumpy a.png\ndumpy 8 ./pass.txt\n");
+        printf("\nWrong argument...\n\n$ dumpy [bytes per line] [file path]\n\nExample:\ndumpy a.png\ndumpy 8 ./pass.txt\n");
         exit(1);
     }
-    /// OMG u didn't free allocated memory and don't close file stream either!!! Guess what? I have an OS.
-    return 0;
+
+    char *buffer = malloc(DEFAULT_SIZE);
+
+    size_t count = 0;
+    size_t defSize = DEFAULT_SIZE;
+    while (1)
+    {
+        buffer[count] = getc(stdin);
+        if (buffer[count] == EOF)
+        {
+            buffer[count] = '\0';
+            break;
+        }
+        count++;
+        if (count > defSize)
+        {
+            buffer = (char *)realloc(buffer, defSize * 2);
+            defSize = defSize * 2;
+        }
+    }
+    handle_stdin_case(buffer, count);
+
+    return EXIT_SUCCESS;
 }
