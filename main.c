@@ -1,3 +1,4 @@
+#include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -19,7 +20,7 @@ void handle_lenght_specified_case(const char *filePath, unsigned int lineLenght)
 
     while (GeneralByteCount < Size)
     {
-        int BytesPerLine = Size - GeneralByteCount;
+        unsigned int BytesPerLine = Size - GeneralByteCount;
         if (BytesPerLine > lineLenght)
             BytesPerLine = lineLenght;
 
@@ -54,7 +55,7 @@ void handle_default_case(const char *filePath)
 
 void handle_stdin_case(char *FileContent, size_t size)
 {
-    int GeneralByteCount = 0;
+    unsigned int GeneralByteCount = 0;
 
     while (GeneralByteCount < size)
     {
@@ -73,7 +74,7 @@ void handle_stdin_case(char *FileContent, size_t size)
 void print_line(char *begin, unsigned int size, unsigned int startingByteNumber)
 {
     printf("%05x ", startingByteNumber);
-    for (int i = 0; i < size; ++i)
+    for (unsigned int i = 0; i < size; ++i)
     {
         char CharToPrint = begin[i];
         if (CharToPrint < 0)
@@ -83,7 +84,7 @@ void print_line(char *begin, unsigned int size, unsigned int startingByteNumber)
     }
 
     printf("|");
-    for (int i = 0; i < size; ++i)
+    for (unsigned int i = 0; i < size; ++i)
     {
         char CharToPrint = begin[i];
         if (is_char_ok((unsigned char)CharToPrint))
@@ -123,7 +124,7 @@ int is_char_ok(unsigned char c)
     if (c == 0x7F)
         return 0;
 
-    if (c <= 0xFF && c >= 0x21)
+    if (c >= 0x21)
         return 1;
     return 0;
 }
